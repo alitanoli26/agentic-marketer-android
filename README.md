@@ -4,30 +4,19 @@
 
 Agentic Marketer is a mobile-first content studio for small businesses and solo marketers. It brings AI-assisted blog writing, social-media captions, hashtags, and marketing visuals into one focused workflow.
 
-## What the project demonstrates
+## This repository contains the real source
 
-The project demonstrates Android development with Kotlin, MVVM architecture, the Repository pattern, Retrofit networking, Firebase Authentication, Cloud Firestore persistence, external AI API integration, loading states, retry handling, and black-box/white-box testing.
+The supplied `Agentic_Marketer_HuggingFace.zip` included a complete Android source tree with Kotlin activities, fragments, ViewModels, repositories, Retrofit services, XML layouts, navigation resources, animations, tests, Gradle configuration, and an `agentic_marketer_backend` directory. Generated build outputs, signing files, Firebase service files, local properties, environment files, and hard-coded credentials were removed before publication preparation.
 
 ## Core features
 
-- User registration and login with Firebase Authentication.
-- SEO-oriented blog post generation.
-- Social-media caption and hashtag generation.
-- AI marketing image generation.
-- Content history stored in Cloud Firestore.
-- Humanize workflow for blog content.
-- Error handling and retry logic for API rate limits.
-- Material Design 3 interface with focused loading states.
-
-## Architecture
-
-```text
-UI screens → ViewModels → Repositories → Retrofit services
-                         ↘ Firebase Auth / Firestore
-                         ↘ Gemini text API / Hugging Face image API
-```
-
-The supplied thesis describes the architecture and testing work in detail. This repository includes the thesis PDF, architecture documentation, and representative Kotlin samples. It does not claim to contain the complete original Android Studio source because that source was not included with the thesis document.
+- User registration, login, password reset, and profile flows.
+- AI blog generation and social-media caption/hashtag generation.
+- AI marketing image generation through the Hugging Face inference endpoint.
+- Dashboard, recent campaigns, history, scheduler, and profile screens.
+- Firebase Authentication, Firestore, and Storage integration.
+- Material Design layouts, Lottie animation, shimmer loading states, and image loading.
+- Repository/ViewModel separation with Retrofit API services.
 
 ## Technology stack
 
@@ -35,33 +24,57 @@ The supplied thesis describes the architecture and testing work in detail. This 
 |---|---|
 | Platform | Android |
 | Language | Kotlin |
-| UI | XML layouts, Material Design 3 |
+| UI | XML layouts, Material Design |
 | Architecture | MVVM + Repository pattern |
 | Authentication | Firebase Authentication |
 | Persistence | Cloud Firestore |
-| Text generation | Google Gemini 1.5 Pro |
-| Image generation | Hugging Face FLUX.1-schnell |
-| Networking | Retrofit |
-| Testing | Black-box and white-box testing |
+| AI text | OpenRouter / Gemini service integrations |
+| AI images | Hugging Face inference endpoint |
+| Networking | Retrofit + OkHttp |
+| Images | Glide |
+| Animations | Lottie + Shimmer |
+| Build | Gradle Kotlin DSL |
 
-## Performance notes
+## Project structure
 
-The thesis reports typical text generation in approximately 5–7 seconds and image generation in approximately 15–20 seconds on a stable network. It also describes retry handling for Hugging Face rate-limit responses and composite Firestore indexes for history queries.
+```text
+app/src/main/java/com/example/agenticmarketer/
+├── api/            Retrofit service definitions and clients
+├── models/         Request and response data models
+├── repositories/   AI and data-access boundaries
+├── ui/             Activities, fragments, and adapters
+├── viewmodels/     UI state and orchestration
+└── utils/          App configuration and local helpers
 
-## Repository contents
+app/src/main/res/
+├── layout/         Android XML screens and list items
+├── navigation/     Navigation graph
+├── drawable/       Icons and background resources
+└── values/         Strings, colors, dimensions, and themes
 
-- `docs/Agentic_Marketer_Thesis.pdf` — full academic report.
-- `docs/architecture.md` — concise architecture and module notes.
-- `kotlin-samples/ContentRepository.kt` — representative safe sample of the repository abstraction.
-- `kotlin-samples/FirestoreManager.kt` — representative persistence boundary sample.
+agentic_marketer_backend/  Supporting backend/agent source from the supplied archive
+docs/                      Thesis and architecture notes
+```
 
-## Security note
+## Safe local setup
 
-Do not commit API keys, `google-services.json`, Firebase service-account files, or local secrets. Use `local.properties`, environment variables, or a private secrets manager for real deployments.
+1. Open the project root in Android Studio.
+2. Add your own `google-services.json` under `app/` from a private Firebase project.
+3. Configure provider credentials locally; never put real values in `Config.kt` or commit them.
+4. Review the API endpoints and Firebase security rules before testing.
+5. Build the debug variant and test authentication, content generation, image generation, and history flows.
 
-## Future directions
+The checked-in `Config.kt` intentionally contains replacement markers. It is a public-safe template, not a working credential store.
 
-Potential extensions include social-media publishing and scheduling, analytics, multimodal input, brand voice personalization, short-form video generation, and collaborative workspaces.
+## Documentation
+
+- `docs/Agentic_Marketer_Thesis.pdf` — full Final Year Project report.
+- `docs/architecture.md` — concise architecture and request-flow notes.
+- `kotlin-samples/` — small representative architecture samples.
+
+## Security warning
+
+The source archive contained credential-like values and private configuration files. Those values were not copied into the public repository preparation. Because credentials may have been exposed in the supplied archive, rotate them in OpenRouter, Google AI, Hugging Face, and Firebase before using the project again.
 
 ## Academic context
 
